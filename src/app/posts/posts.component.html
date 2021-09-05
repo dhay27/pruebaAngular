@@ -1,0 +1,98 @@
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <a class="navbar-brand">Listado de Videojuegos</a>
+</nav>
+  <div class="container">
+    <br>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+      Agregar 
+    </button>
+    <br><br>
+    <table class="table table-striped">
+      <thead>
+       <tr>
+        <th><input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search"  [(ngModel)]="filterpost"
+          name="filterpost"></th>
+        <th><input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search"  [(ngModel)]="filterdescrip"
+          name="filterdescrip"></th>
+        <th><input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search"  [(ngModel)]="filterdeveloper"
+          name="filterdeveloper"></th>
+        <th><input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search"  [(ngModel)]="filterconsole"
+          name="filterconsole"></th>
+        <th><input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search"  [(ngModel)]="filterfecha"
+          name="filterfecha"></th>
+       </tr> 
+        <tr>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Desarrollador</th>
+          <th>Consola</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dato of inmu | filter: filterpost | paginate: { itemsPerPage: 5, currentPage: page }">
+          <td>{{ dato.name }}</td>
+          <td>{{ dato.description }}</td> 
+          <td>{{ dato["developer"]["name"] }}</td>
+          <td>{{ dato.console[0].name }}</td> 
+          <td>{{ dato.year }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="page=$event" previouslabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+
+   <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Videojuego</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Nombre" >
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect02">
+                  <option selected>Desarrollador</option>
+                  <option *ngFor="let dato of developer" value="{{dato._id}}">{{ dato.name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Descripcion" size="300" style="height:100px">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>Consolas</option>
+                  <option *ngFor="let dato of consolas" value="{{dato._id}}">{{ dato.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <input type="number" min="0" class="form-control" placeholder="Año">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
